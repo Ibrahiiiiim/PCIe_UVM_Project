@@ -1,0 +1,4 @@
+`ifndef PIPE_SEQUENCE_ITEM_SV
+	`define PIPE_SEQUENCE_ITEM_SV
+	
+`endif
