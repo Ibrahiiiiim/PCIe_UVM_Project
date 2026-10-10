@@ -10,7 +10,7 @@
 		//inputs from pipe
 		
 		logic i_LTSSM_UpLink;
-		logic i_RXElecIdle;
+		logic i_LTSSM_ElecIdle;
 		logic i_LTSSM_LaneDetected;
 
 		clocking FCM_cb @(posedge i_clk);
