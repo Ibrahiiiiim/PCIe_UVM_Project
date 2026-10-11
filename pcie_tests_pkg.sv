@@ -3,6 +3,7 @@
 	`include "uvm_macros.svh"
 	`include "pcie_phy_if.sv"
 	`include "pcie_fsm_if.sv"
+	`include "pipe_if.sv"
 	package pcie_tests_pkg;
 		import uvm_pkg::*;
 		
