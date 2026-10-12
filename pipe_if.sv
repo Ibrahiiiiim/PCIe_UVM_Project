@@ -36,7 +36,7 @@
 		function void display_in(input string name="",input Block block);
 			if (block == FSM) begin
 				`uvm_info(name,$sformatf("\nFSM - PIPE interface input data :\n o_LTSSM_LaneDetected = %0b ,o_LTSSM_UpLink = %0b ,o_LTSSM_RxElecIdle = %0b",
-					o_LTSSM_LaneDetected,o_LTSSM_Uplink,o_LTSSM_RxElecIdle),UVM_MEDIUM)
+					o_LTSSM_LaneDetected,o_LTSSM_UpLink,o_LTSSM_RxElecIdle),UVM_MEDIUM)
 			end
 			else if(block==PHY)
 			`uvm_info(name, $sformatf("\nPHY - PIPE interface input data:\no_TxDetectRx_Loopback = %0b, o_TxElecIdle = %0b, o_TxCompliance = %0b, o_RxPolarity = %0b, \no_PowerDown = %0d, o_Rate = %0b",
@@ -62,15 +62,27 @@
 				pipe_cb.o_LTSSM_LaneDetected <= s1.o_LTSSM_LaneDetected;
 				pipe_cb.o_LTSSM_UpLink <= s1.o_LTSSM_UpLink;
 				pipe_cb.o_LTSSM_RxElecIdle <= s1.o_LTSSM_RxElecIdle;
+			
+				`ifdef DEBUG
+				#1step;
+				$display_in("FSM/PIPE Driver",block);
+				`endif
 			end
-			`ifdef DEBUG
-			#1step;
-			$display_in("FSM/PIPE Driver",block);
-			`endif
 		endtask : drive
 		
-		task automatic monitor();
-			
+		task automatic monitor(ref pipe_sequence_item s1,input Block block);
+			@(pipe_cb);
+			if (block==FSM) begin
+				s1.o_LTSSM_LaneDetected <= pipe_cb.o_LTSSM_LaneDetected;
+				s1.o_LTSSM_UpLink <= pipe_cb.o_LTSSM_UpLink
+				s1.o_LTSSM_RxElecIdle <= pipe_cb.o_LTSSM_RxElecIdle;
+				s1.i_LTSSMState <= pipe_cb.i_LTSSMState;
+				#1step;
+				`ifndef DEBUG
+				$display_in("FSM/PIPE monitor",block);
+				$display_out("FSM/PIPE monitor",block);
+				`endif
+			end
 		endtask : monitor
 		
 	endinterface : pipe_if
