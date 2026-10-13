@@ -8,6 +8,7 @@
 		`include "pipe_driver.sv"
 		`include "pipe_monitor.sv"
 		`include "pipe_sequencer.sv"
+		`include "pipe_agent.sv"
 		
 	endpackage : pipe_pkg
 `endif
