@@ -8,7 +8,7 @@
 
 		uvm_analysis_port#(pipe_sequence_item) pipe_analysis_port;
 
-		`uvm_component_param_utils(pipe_monitor#(monitor))
+		`uvm_component_param_utils(pipe_monitor#(block))
 	
 		function new(string name = "pipe_monitor", uvm_component parent=null);
 			super.new(name, parent);
@@ -19,7 +19,7 @@
 			super.build_phase(phase);
 			item = pipe_sequence_item ::type_id::create("item");
 			`uvm_info(get_type_name(),"build_phase",UVM_HIGH)
-			if (!uvm_config_db#(virtual pipe_if)::get(this,"","vif",vif)) begin
+			if (!uvm_config_db#(virtual pipe_if)::get(this,"","pipe_vif",vif)) begin
 				`uvm_error("NOVIF",{"virtual interface must be set for: ",get_full_name(),".vif"})
 			end
 			pipe_analysis_port = new("pipe_analysis_port",this);

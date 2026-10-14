@@ -4,6 +4,8 @@
 		typedef enum {Detect_Quiet, Detect_Active, Polling_Active, Polling_configuration,
     	Config_Linkwidth_start, Config_Linkwidth_Accept, Config_Lanenum_wait, Config_Lanenum_Accept,
     	Config_complete, Config_idle, L0} state;
+
+    	bit i_clk;
 		
 		//ltssm input
 		logic [4:0] i_LTSSMState;

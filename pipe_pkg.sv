@@ -5,6 +5,7 @@
 	package pipe_pkg;
 		import uvm_pkg::*;
 		`include "pipe_sequence_item.sv"
+		`include "pipe_agent_config.sv"
 		`include "pipe_driver.sv"
 		`include "pipe_monitor.sv"
 		`include "pipe_sequencer.sv"

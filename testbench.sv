@@ -6,12 +6,14 @@ module testbench;
 	
 	bit i_clk;
 
-	always #(`CYCLE/2) i_clk <= ~clk;
+	always #(`CYCLE/2) i_clk <= ~i_clk;
 
 	pcie_phy_if phy_if(i_clk);
 	pcie_fsm_if fsm_if(i_clk,i_resetn);
+	pipe_if pipe_if (i_clk);
 
 	initial begin
+		uvm_config_db#(virtual pipe_if)::set(null, "uvm_test_top", "pipe_vif",pipe_if );
 		run_test("");
 	end
 
@@ -29,5 +31,14 @@ module testbench;
  		.o_LTSSM_LaneDetected (fsm_if.o_LTSSM_LaneDetected),
  		.o_LTSSM_UpLink       (fsm_if.o_LTSSM_UpLink),
  		.o_LTSSM_RxElecIdle   (fsm_if.o_LTSSM_RxElecIdle)
+ 	);
+
+ 	pcie_LTSSM_stateMachine FSM_DUT(
+ 		.i_PCLK(i_clk),
+ 		.i_PHY_laneDetected(pipe_if.o_LTSSM_LaneDetected),
+ 		.i_PHY_RxElecIdle(pipe_if.o_LTSSM_RxElecIdle)
+
+
+
  	);
 endmodule : testbench

@@ -15,7 +15,7 @@
 		function void build_phase(uvm_phase phase);
 			super.build_phase(phase);
 			`uvm_info(get_type_name(),"build_phase",UVM_HIGH)
-			if (!uvm_config_db#(virtual pipe_if)::get(this, "", "vif",vif )) begin
+			if (!uvm_config_db#(virtual pipe_if)::get(this, "", "pipe_vif",vif )) begin
 				`uvm_error("NOVIF",{"virtual interface must be set for :",get_full_name(),".vif"})
 			end
 		endfunction : build_phase

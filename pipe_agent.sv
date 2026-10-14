@@ -30,12 +30,12 @@
 				`uvm_error("NOCONFIG",{"configuration object must be set for: ",get_full_name(),".config"})
 			end
 			if (config.is_active==UVM_ACTIVE) begin
-				uvm_config_db#(virtual pipe_if)::set(this, "driver", "vif",config.vif );
+				uvm_config_db#(virtual pipe_if)::set(this, "driver", "pipe_vif",config.vif );
 				driver = pipe_driver#(block)::type_id::create("driver",this);
 				sequencer = pipe_sequencer::type_id::create("sequencer",this);
 			end
 			
-			uvm_config_db#(virtual pipe_if)::set(this,"monitor","vif",config.vif);
+			uvm_config_db#(virtual pipe_if)::set(this,"monitor","pipe_vif",config.vif);
 			monitor = pipe_monitor#(block)::type_id::create("monitor",this);
 
 		endfunction : build_phase
