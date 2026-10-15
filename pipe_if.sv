@@ -80,7 +80,7 @@
 				s1.o_LTSSM_RxElecIdle <= pipe_cb.o_LTSSM_RxElecIdle;
 				s1.i_LTSSMState <= pipe_cb.i_LTSSMState;
 				#1step;
-				`ifndef DEBUG
+				`ifdef DEBUG
 				$display_in("FSM/PIPE monitor",block);
 				$display_out("FSM/PIPE monitor",block);
 				`endif
