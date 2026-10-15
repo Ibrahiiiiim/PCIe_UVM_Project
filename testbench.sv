@@ -11,9 +11,11 @@ module testbench;
 	pcie_phy_if phy_if(i_clk);
 	pcie_fsm_if fsm_if(i_clk,i_resetn);
 	pipe_if pipe_if (i_clk);
+	timer_if timer_if (i_clk,i_resetn);
 
 	initial begin
 		uvm_config_db#(virtual pipe_if)::set(null, "uvm_test_top", "pipe_vif",pipe_if );
+		uvm_config_db#(virtual timer_if)::set(null, "uvm_test_top", "timer_vif",timer_if );
 		run_test("");
 	end
 
@@ -34,11 +36,14 @@ module testbench;
  	);
 
  	pcie_LTSSM_stateMachine FSM_DUT(
- 		.i_PCLK(i_clk),
+		//pipe
+		.i_PCLK(i_clk),
+ 		.o_LTSSM_state             (pipe_if.o_LTSSM_state),
  		.i_PHY_laneDetected(pipe_if.o_LTSSM_LaneDetected),
  		.i_PHY_RxElecIdle(pipe_if.o_LTSSM_RxElecIdle)
-
-
-
+ 		//timer
+ 		.i_timer_timeout           (timer_if.i_timer_timeout),
+ 		.o_timer_timeoutValue      (timer_if.o_timer_timeoutValue),
+ 		.o_timer_start             (timer_if.o_timer_start),
  	);
 endmodule : testbench
