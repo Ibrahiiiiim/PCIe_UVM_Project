@@ -38,12 +38,12 @@ module testbench;
  	pcie_LTSSM_stateMachine FSM_DUT(
 		//pipe
 		.i_PCLK(i_clk),
- 		.o_LTSSM_state             (pipe_if.o_LTSSM_state),
+ 		.o_LTSSM_state             (pipe_if.i_LTSSM_state),
  		.i_PHY_laneDetected(pipe_if.o_LTSSM_LaneDetected),
  		.i_PHY_RxElecIdle(pipe_if.o_LTSSM_RxElecIdle)
  		//timer
- 		.i_timer_timeout           (timer_if.i_timer_timeout),
- 		.o_timer_timeoutValue      (timer_if.o_timer_timeoutValue),
- 		.o_timer_start             (timer_if.o_timer_start),
+ 		.i_timer_timeout           (timer_if.o_time_out),
+ 		.o_timer_timeoutValue      (timer_if.i_time_out_Value),
+ 		.o_timer_start             (timer_if.i_start),
  	);
 endmodule : testbench
