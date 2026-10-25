@@ -12,10 +12,12 @@ module testbench;
 	pcie_fsm_if fsm_if(i_clk,i_resetn);
 	pipe_if pipe_if (i_clk);
 	timer_if timer_if (i_clk,i_resetn);
+	os_decoder_if osdecoder_if(i_clk,i_resetn);
 
 	initial begin
 		uvm_config_db#(virtual pipe_if)::set(null, "uvm_test_top", "pipe_vif",pipe_if );
 		uvm_config_db#(virtual timer_if)::set(null, "uvm_test_top", "timer_vif",timer_if );
+		uvm_config_db#(virtual os_decoder_if)::set(null, "uvm_test_top", "os_decoder_vif",osdecoder_if );
 		run_test("");
 	end
 
@@ -45,5 +47,9 @@ module testbench;
  		.i_timer_timeout           (timer_if.o_time_out),
  		.o_timer_timeoutValue      (timer_if.i_time_out_Value),
  		.o_timer_start             (timer_if.i_start),
+ 		//os_decoder
+ 		.i_OSdecoder_Ack           (osdecoder_if.o_OSdecoder_Ack),
+ 		.i_OSdecoder_Link          (osdecoder_if.o_OSdecoder_Link),
+ 		.i_OSdecoder_Lane          (osdecoder_if.o_OSdecoder_Lane),
  	);
 endmodule : testbench
