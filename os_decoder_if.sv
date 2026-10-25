@@ -17,7 +17,7 @@
 		logic [1:0] o_OSdecoder_Ack;
 		logic [7:0] o_OSdecoder_Lane,o_OSdecoder_Link;
 
-		clocking cb @(posedge i_clk);
+		clocking os_decoder_cb @(posedge i_clk);
 			default input #1step output #1step;
 			input i_LTSSM_state,i_LTSSM_stateChange,i_LTSSM_UpDown,i_Rx_Data,i_Rx_DataK,i_Rx_valid,i_Rx_COM_Indicator;
 			inout o_OSdecoder_Ack,o_OSdecoder_Lane,o_OSdecoder_Link;
@@ -41,12 +41,45 @@
         end
 		endfunction : display_out
 
-		task drive();
-			
+		task drive(input osdecoder_sequence_item s1,input Block block);
+			@(os_decoder_cb);
+			if (block == FSM) begin
+				os_decoder_cb.o_OSdecoder_Ack <= s1.o_OSdecoder_Ack;
+				os_decoder_cb.o_OSdecoder_Lane <= s1.o_OSdecoder_Lane;
+				os_decoder_cb.o_OSdecoder_Link <= s1.o_OSdecoder_Link;
+				`ifdef DEBUG
+				#1step;
+				display_in("FSM/OSdecoder driver",block);
+				`endif 
+			end
 		endtask : drive
 
-		task automatic monitor();
-			
+		task automatic monitor(ref osdecoder_sequence_item s1,input Block block);
+			@(os_decoder_cb);
+			if (block == FSM) begin
+				s1.o_OSdecoder_Ack = os_decoder_cb.o_OSdecoder_Ack;
+				s1.o_OSdecoder_Lane = os_decoder_cb.o_OSdecoder_Lane;
+				s1.o_OSdecoder_Link = os_decoder_cb.o_OSdecoder_Link;
+				s1.i_LTSSM_state = os_decoder_cb.i_LTSSM_state;
+				s1.i_LTSSM_stateChange = os_decoder_cb.i_LTSSM_stateChange;
+				s1.i_LTSSM_UpDown = os_decoder_cb.i_LTSSM_UpDown;
+				
+				`ifdef DEBUG
+				s1.display_in("FSM/OSdecoder monitor",block);
+				s1.display_out("FSM/OSdecoder monitor", block)
+				`endif
+			end
+
+			else if (block == RX) begin
+				s1.i_Rx_Data = os_decoder_cb.i_Rx_Data;
+				s1.i_Rx_DataK = os_decoder_cb.i_Rx_DataK;
+				s1.i_Rx_valid = os_decoder_cb.i_Rx_valid;
+				s1.i_Rx_COM_Indicator = os_decoder_cb.i_Rx_COM_Indicator;
+
+				`ifdef DEBUG
+				s1.display_out("Rx/OSdecoder monitor",RX);
+				`endif
+			end
 		endtask : monitor
 
 	endinterface : os_decoder_if

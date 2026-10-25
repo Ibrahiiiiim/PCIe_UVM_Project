@@ -9,6 +9,7 @@
 		`include "osdecoder_sequencer.sv"
 		`include "osdecoder_driver.sv"
 		`include "osdecoder_monitor.sv"
+		`include "osdecoder_agent.sv"
 		
 	endpackage : os_decoder_pkg
 `endif
