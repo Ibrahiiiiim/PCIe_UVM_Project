@@ -13,11 +13,13 @@ module testbench;
 	pipe_if pipe_if (i_clk);
 	timer_if timer_if (i_clk,i_resetn);
 	os_decoder_if osdecoder_if(i_clk,i_resetn);
+	os_creator_if oscreator_if(i_clk,i_resetn);
 
 	initial begin
 		uvm_config_db#(virtual pipe_if)::set(null, "uvm_test_top", "pipe_vif",pipe_if );
 		uvm_config_db#(virtual timer_if)::set(null, "uvm_test_top", "timer_vif",timer_if );
 		uvm_config_db#(virtual os_decoder_if)::set(null, "uvm_test_top", "os_decoder_vif",osdecoder_if );
+		uvm_config_db#(virtual os_decoder_if)::set(null, "uvm_test_top", "os_creator_vif",oscreator_if );
 		run_test("");
 	end
 
@@ -51,5 +53,28 @@ module testbench;
  		.i_OSdecoder_Ack           (osdecoder_if.o_OSdecoder_Ack),
  		.i_OSdecoder_Link          (osdecoder_if.o_OSdecoder_Link),
  		.i_OSdecoder_Lane          (osdecoder_if.o_OSdecoder_Lane),
+ 		//os_creator
+ 		.i_OScreator_Ack           (oscreator_if.o_OScreator_Ack),
+ 		.o_OScreator_Symbol0       (oscreator_if.i_OScreatorSymbol0),
+ 		.o_OScreator_Symbol1       (oscreator_if.i_OScreatorSymbol1),
+ 		.o_OScreator_Symbol2       (oscreator_if.i_OScreatorSymbol2),
+ 		.o_OScreator_Symbol3       (oscreator_if.i_OScreatorSymbol3),
+ 		.o_OScreator_Symbol4       (oscreator_if.i_OScreatorSymbol4),
+ 		.o_OScreator_Symbol5       (oscreator_if.i_OScreatorSymbol5),
+ 		.o_OScreator_Symbol6       (oscreator_if.i_OScreatorSymbol6),
+ 		.o_OScreator_Symbol7       (oscreator_if.i_OScreatorSymbol7),
+ 		.o_OScreator_Symbol8       (oscreator_if.i_OScreatorSymbol8),
+ 		.o_OScreator_Symbol9       (oscreator_if.i_OScreatorSymbol9),
+ 		.o_OScreator_Symbol10       (oscreator_if.i_OScreatorSymbol10),
+ 		.o_OScreator_Symbol11       (oscreator_if.i_OScreatorSymbol11),
+ 		.o_OScreator_Symbol12       (oscreator_if.i_OScreatorSymbol12),
+ 		.o_OScreator_Symbol13       (oscreator_if.i_OScreatorSymbol13),
+ 		.o_OScreator_Symbol14       (oscreator_if.i_OScreatorSymbol14),
+ 		.o_OScreator_Symbol15       (oscreator_if.i_OScreatorSymbol15),
+ 		.o_LTSSM_stateChange       (oscreator_if.i_LTSSM_stateChange),
+ 		.o_OScreator_reqNum        (oscreator_if.i_OSreqNum),
+ 		.o_OScreator_resetTScounter(oscreator_if.i_reset_TS_count),
+ 		.o_OScreator_enable        (oscreator_if.i_enable),
+ 		.o_OScreator_types         (oscreator_if.i_OScreatorTypes),
  	);
 endmodule : testbench
