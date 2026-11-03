@@ -4,6 +4,7 @@
 	`include "tx_if.sv"
 	package tx_pkg;
 		import uvm_pkg::*;
+		`include "tx_sequence_item.sv"
 		
 	endpackage : tx_pkg
 `endif

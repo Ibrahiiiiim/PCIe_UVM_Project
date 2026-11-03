@@ -16,13 +16,14 @@
 			inout o_OsBuffer_full;
 		endclocking
 
-		task drive(input Block block);
+		task drive(input tx_sequence_item s1,input Block block);
 			if (block == Creator) begin
-				
+				tx_cb.o_OsBuffer_full <= s1.o_OsBuffer_full;
 			end 
 			else if (block == FSM) begin
 				
-			end
+			end else
+				`uvm_error("TX interface","Invalid Block")
 		endtask : drive
 
 		task automatic monitor(input Block block);

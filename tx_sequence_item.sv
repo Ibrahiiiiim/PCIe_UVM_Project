@@ -24,7 +24,7 @@
 			if (block == Creator) begin
 				`uvm_info(name,$sformatf("\nCreator - TX transaction input data :\no_OsBuffer_full = %0b",
 				o_OsBuffer_full	),UVM_MEDIUM)
-			end else if (block == TX) begin
+			end else if (block == FSM) begin
 				
 			end else
 				`uvm_error("TX interface","Invalid Block")
@@ -35,9 +35,9 @@
 				`uvm_info(name,
                     $sformatf("\nTX - Creator transaction Output Data:\ni_OsBuffer_Data = %0h,i_OsBuffer_WrEn = %0b",i_OsBuffer_Data,i_OsBuffer_WrEn),
                     UVM_MEDIUM)
-			end else if (block == TX) begin
+			end else if (block == FSM) begin
 				`uvm_info(name,
-                    $sformatf("\nL0 = %0b",
+                    $sformatf("\nTX - FSM transaction Output:\n DataL0 = %0b",
                     L0),
                     UVM_MEDIUM)
 			end
